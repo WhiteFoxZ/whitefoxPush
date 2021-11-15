@@ -13,20 +13,18 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "PushNotificationService";
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        Log.d(TAG, " 1111" );
+        Log.d(TAG, " onCreate 시작" );
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(TAG, " 2222" );
-
-
+        Log.d(TAG, " FirebaseMessaging getToken 시작" );
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -47,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
-
-
+        Log.d(TAG, " FirebaseMessaging getToken 끝" );
     }
 }

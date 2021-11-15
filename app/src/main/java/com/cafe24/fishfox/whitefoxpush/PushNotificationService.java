@@ -13,7 +13,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -21,11 +20,12 @@ import com.google.firebase.messaging.RemoteMessage;
 public class PushNotificationService extends FirebaseMessagingService {
 
     private static final String TAG = "PushNotificationService";
-    
+
+
 
     @Override
     public void onNewToken(String token) {
-        System.out.println("*******새토큰이 생성...*******");
+
         super.onNewToken(token);
 
         Log.d(TAG, "Refreshed token: " + token);
@@ -40,25 +40,19 @@ public class PushNotificationService extends FirebaseMessagingService {
 
     private void sendRegistrationToServer(String token) {
 
-
-        System.out.println("********22222222222222******");
-
-        String token2 = FirebaseMessaging.getInstance().getToken().getResult();
-
-
         Log.d(TAG, "서버DB 에  token 을 저장한다. " + token);
-        Log.d(TAG, "서버DB 에  token 을 저장한다. " + token2);
-
 
     }
 
 
+    /**
+     * notification 없이 메시지만 보낼시.또는 forground  일때 호출
+     * @param remoteMessage
+     */
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
 
-        System.out.println("********433333333333333342******");
-
-
+        
         // [START_EXCLUDE]
         // There are two types of messages data messages and notification messages. Data messages
         // are handled
@@ -91,13 +85,14 @@ public class PushNotificationService extends FirebaseMessagingService {
                 handleNow();
             }
 
+            sendNotification(remoteMessage.getNotification().getBody());
+
         }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
 
-            sendNotification(remoteMessage.getNotification().getBody());
 
 
 
@@ -105,6 +100,10 @@ public class PushNotificationService extends FirebaseMessagingService {
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
+
+
+
+
     }
 
 
