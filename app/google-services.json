@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "72581929200",
+    "project_id": "whitefoxpush",
+    "storage_bucket": "whitefoxpush.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72581929200:android:d4bc4d33b15d46afd94a35",
+        "android_client_info": {
+          "package_name": "com.cafe24.fishfox.whitefoxpush"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "72581929200-hagrjpa9ai0ra4061aqhitu11io3c432.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cafe24.fishfox.whitefoxpush",
+            "certificate_hash": "a5af98918abd3d6140c79b8de90967cd6a5b184d"
+          }
+        },
+        {
+          "client_id": "72581929200-q6g5i2p63l4kt6dig0l6djde161cf8mv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD41VkD3uNUVFuzHhK1QJYagBCdkYbv6s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "72581929200-q6g5i2p63l4kt6dig0l6djde161cf8mv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
