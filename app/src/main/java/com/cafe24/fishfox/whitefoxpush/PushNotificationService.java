@@ -12,9 +12,14 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import org.json.JSONObject;
 
 
 public class PushNotificationService extends FirebaseMessagingService {
@@ -77,15 +82,16 @@ public class PushNotificationService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
+
             if (/* Check if data needs to be processed by long running job */ true) {
                 // For long-running tasks (10 seconds or more) use WorkManager.
-                scheduleJob();
+                scheduleJob(new JSONObject(remoteMessage.getData()));
             } else {
                 // Handle message within 10 seconds
                 handleNow();
             }
 
-            sendNotification(remoteMessage.getNotification().getBody());
+
 
         }
 
@@ -93,7 +99,7 @@ public class PushNotificationService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
 
-
+            //sendNotification(remoteMessage.getNotification().getBody());
 
 
         }
@@ -111,8 +117,16 @@ public class PushNotificationService extends FirebaseMessagingService {
     /**
      * Schedule async work using WorkManager.
      */
-    private void scheduleJob() {
+    private void scheduleJob(JSONObject json) {
         // [START dispatch_job]
+
+        Data inputData = new Data.Builder().putString("data", json.toString()).build();
+
+        OneTimeWorkRequest work = new OneTimeWorkRequest.Builder(MyWorker.class).setInputData(inputData).build();
+
+        WorkManager.getInstance(this).beginWith(work).enqueue();
+
+
 
         // [END dispatch_job]
     }
@@ -132,6 +146,9 @@ public class PushNotificationService extends FirebaseMessagingService {
      * @param messageBody FCM message body received.
      */
     private void sendNotification(String messageBody) {
+
+        Log.d(TAG, "sendNotification.");
+
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -160,5 +177,9 @@ public class PushNotificationService extends FirebaseMessagingService {
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
+
+
+
+
 
 }
